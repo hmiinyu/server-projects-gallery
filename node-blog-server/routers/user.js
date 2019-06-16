@@ -6,9 +6,10 @@ const userRouter = (req, res) => {
   const { username, password } = body;
 
   if (method === 'POST' && path === '/api/user/login') {
-    const result = userLogin(username, password);
-    if (!result) return new ErrorModel('用户登录失败');
-    return new SuccessModel();
+    return userLogin(username, password).then(result => {
+      if (!result.username) return new ErrorModel('用户登录失败');
+      return new SuccessModel();
+    });
   }
 };
 

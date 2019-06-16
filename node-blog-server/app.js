@@ -34,13 +34,17 @@ const handleServer = (req, res) => {
 
     const blogResult = blogRouter(req, res);
     if (blogResult) {
-      res.end(JSON.stringify(blogResult));
+      blogResult.then(result => {
+        res.end(JSON.stringify(result));
+      });
       return;
     }
 
     const userResult = userRouter(req, res);
     if (userResult) {
-      res.end(JSON.stringify(userResult));
+      userResult.then(result => {
+        res.end(JSON.stringify(result));
+      });
       return;
     }
 
