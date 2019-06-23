@@ -1,5 +1,6 @@
+const { model } = require('m2-node');
 const { getList, getDetail, createItem, updateItem, deleteItem } = require('../controllers/blog');
-const { SuccessModel, ErrorModel } = require('../models/res.model');
+const { SuccessModel, ErrorModel } = model;
 
 const blogRouter = (req, res) => {
   const { method, path, query, body } = req;

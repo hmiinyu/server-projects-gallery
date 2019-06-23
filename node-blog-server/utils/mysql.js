@@ -1,17 +1,7 @@
-const mysql = require('mysql');
+const { mysql } = require('m2-node');
 const config = require('../constants/db.conf');
-const connection = mysql.createConnection(config);
-const exec = (sql) => {
-  return new Promise((resolve, reject) => {
-    connection.query(sql, (err, data) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(data);
-    });
-  });
-};
+const connection = mysql.connect(config.mysql);
+const exec = (sql) => mysql.execSql(connection, sql);
 
 module.exports = {
   exec

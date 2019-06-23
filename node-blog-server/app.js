@@ -1,40 +1,28 @@
-const qs = require('querystring');
+const { http } = require('m2-node');
 const blogRouter = require('./routers/blog');
 const userRouter = require('./routers/user');
+const sessionData = {};
+const needCookie = false;
 
-const getPostData = (req) => {
-  return new Promise((resolve, reject) => {
-    const { method, headers } = req;
-    if (method !== 'POST' || headers['content-type'] !== 'application/json') {
-      resolve({});
-      return;
-    }
-    let data = '';
-    req.on('data', chunk => {
-      data += chunk.toString();
-    });
-    req.on('end', () => {
-      if (!data) {
-        resolve({});
-        return;
-      }
-      resolve(JSON.parse(data));
-    });
-  });
-};
 const handleServer = (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-
-  const { url } = req;
-  req.path = url.split('?')[0];
-  req.query = qs.parse(url.split('?')[1]);
-
-  getPostData(req).then(data => {
+  // 解析query
+  http.parseQuery(req);
+  // 解析cookie
+  http.parseCookie(req);
+  // 解析session
+  http.parseSession(req, sessionData, needCookie);
+  // 获取post数据
+  http.getPostData(req).then(data => {
     req.body = data;
 
     const blogResult = blogRouter(req, res);
     if (blogResult) {
       blogResult.then(result => {
+        const { id } = req.session;
+        if (needCookie) {
+          http.setServerCookie(res, 'sid', id);
+        }
         res.end(JSON.stringify(result));
       });
       return;
@@ -43,6 +31,10 @@ const handleServer = (req, res) => {
     const userResult = userRouter(req, res);
     if (userResult) {
       userResult.then(result => {
+        const { id } = req.session;
+        if (needCookie) {
+          http.setServerCookie(res, 'sid', id);
+        }
         res.end(JSON.stringify(result));
       });
       return;
