@@ -2,7 +2,6 @@ const { http } = require('m2-node');
 const redis = require('./src/db/redis');
 const blogRouter = require('./src/router/blog');
 const userRouter = require('./src/router/user');
-const needCookie = false;
 
 const handleServer = (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -11,7 +10,7 @@ const handleServer = (req, res) => {
   // 解析cookie
   http.parseCookie(req);
   // 解析session
-  http.parseSession(req, redis, needCookie).then(data => {
+  http.parseSession(req, redis).then(data => {
     req.body = data;
 
     const blogResult = blogRouter(req, res);
