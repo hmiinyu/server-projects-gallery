@@ -1,7 +1,7 @@
 const { http } = require('m2-node');
-const blogRouter = require('./routers/blog');
-const userRouter = require('./routers/user');
-const sessionData = {};
+const redis = require('./src/db/redis');
+const blogRouter = require('./src/router/blog');
+const userRouter = require('./src/router/user');
 const needCookie = false;
 
 const handleServer = (req, res) => {
@@ -11,16 +11,14 @@ const handleServer = (req, res) => {
   // 解析cookie
   http.parseCookie(req);
   // 解析session
-  http.parseSession(req, sessionData, needCookie);
-  // 获取post数据
-  http.getPostData(req).then(data => {
+  http.parseSession(req, redis, needCookie).then(data => {
     req.body = data;
 
     const blogResult = blogRouter(req, res);
     if (blogResult) {
       blogResult.then(result => {
         const { id } = req.session;
-        if (needCookie) {
+        if (req.needCookie) {
           http.setServerCookie(res, 'sid', id);
         }
         res.end(JSON.stringify(result));
@@ -32,7 +30,7 @@ const handleServer = (req, res) => {
     if (userResult) {
       userResult.then(result => {
         const { id } = req.session;
-        if (needCookie) {
+        if (req.needCookie) {
           http.setServerCookie(res, 'sid', id);
         }
         res.end(JSON.stringify(result));

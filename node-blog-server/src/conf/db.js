@@ -9,6 +9,10 @@ if (env === 'development') {
       user: 'root',
       password: '1984_$hmy810',
       database: 'myblog'
+    },
+    redis: {
+      host: '127.0.0.1',
+      port: 6379
     }
   };
 }
@@ -21,6 +25,10 @@ if (env === 'production') {
       user: 'root',
       password: '1984_$hmy810',
       database: 'myblog'
+    },
+    redis: {
+      host: '127.0.0.1',
+      port: 6379
     }
   };
 }
