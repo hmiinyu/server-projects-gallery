@@ -26,6 +26,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Now you can open [http://localhost:8080/index.html](http://localhost:8080/index.html) will proxy server and client.
 
+- Run the crontab to split the log file. <br>
+### `crontab -e` to open the command.
+### `* 0 * * * sh /Users/miracle/Desktop/DevOps/M2.Frontend/server/projects/node-blog-server/copy.sh`
+
+Next you can exit the command to run `crontab -l` to view all crontab tasks.
+
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 

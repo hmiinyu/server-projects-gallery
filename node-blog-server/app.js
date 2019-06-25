@@ -1,10 +1,13 @@
 const { http } = require('m2-node');
+const { accessLog } = require('./src/util/log');
 const redis = require('./src/db/redis');
 const blogRouter = require('./src/router/blog');
 const userRouter = require('./src/router/user');
 
 const handleServer = (req, res) => {
   res.setHeader('Content-Type', 'application/json');
+  // 记录日志
+  accessLog(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`);
   // 解析query
   http.parseQuery(req);
   // 解析cookie
