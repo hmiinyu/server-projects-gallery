@@ -1,4 +1,4 @@
-const { model } = require('m2-node');
+const { model } = require('m2-nodejs');
 const { getList, getDetail, createItem, updateItem, deleteItem } = require('../controller/blog');
 const { checkIsAuth } = require('../util/auth');
 const { SuccessModel, ErrorModel } = model;

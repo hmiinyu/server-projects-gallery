@@ -1,5 +1,5 @@
 const path = require('path');
-const { writeLog } = require('m2-node');
+const { writeLog } = require('m2-nodejs');
 const env = process.env.NODE_ENV;
 
 const write = (fileName, log) => {

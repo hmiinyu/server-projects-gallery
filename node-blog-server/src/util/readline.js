@@ -1,5 +1,5 @@
 const path = require('path');
-const { readline } = require('m2-node');
+const { readline } = require('m2-nodejs');
 
 const fileName = path.join(__dirname, '../../log', 'access.log');
 const rl = readline(fileName);

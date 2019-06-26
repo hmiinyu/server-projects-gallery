@@ -1,4 +1,4 @@
-const { model } = require('m2-node');
+const { model, encryptPassword } = require('m2-nodejs');
 const { ErrorModel } = model;
 
 const checkIsAuth = (session) => {
@@ -7,6 +7,9 @@ const checkIsAuth = (session) => {
   }
 };
 
+const encrypt = (password) => encryptPassword(password, 'm2-node_$#blog');
+
 module.exports = {
-  checkIsAuth
+  checkIsAuth,
+  encrypt
 };

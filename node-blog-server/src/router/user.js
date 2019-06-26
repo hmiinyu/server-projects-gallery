@@ -1,4 +1,4 @@
-const { model } = require('m2-node');
+const { model } = require('m2-nodejs');
 const { set } = require('../db/redis');
 const { userLogin } = require('../controller/user');
 const { SuccessModel, ErrorModel } = model;

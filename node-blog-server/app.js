@@ -1,4 +1,4 @@
-const { http } = require('m2-node');
+const { http } = require('m2-nodejs');
 const { accessLog } = require('./src/util/log');
 const redis = require('./src/db/redis');
 const blogRouter = require('./src/router/blog');

@@ -1,4 +1,4 @@
-const { redis } = require('m2-node');
+const { redis } = require('m2-nodejs');
 const config = require('../conf/db');
 const client = redis.connect(config.redis);
 const set = (key, val) => redis.setItem(client, key, val);
