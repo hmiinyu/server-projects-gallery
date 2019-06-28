@@ -1,16 +1,16 @@
 {
-  "name": "node-blog-server",
+  "name": "express-blog-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "bin/www.js",
+  "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon ./bin/www",
     "build": "cross-env NODE_ENV=production nodemon ./bin/www"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "jade": "^1.11.0",
     "m2-nodejs": "^1.0.0",
     "xss": "^1.0.6"
   },

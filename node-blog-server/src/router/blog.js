@@ -12,7 +12,7 @@ const blogRouter = (req, res) => {
     if (isadmin) {
       const result = checkIsAuth(session);
       if (result) return result;
-      author = session.data.username
+      author = session.data.username;
     }
     return getList(author, keyword).then(result => {
       return new SuccessModel(result);
