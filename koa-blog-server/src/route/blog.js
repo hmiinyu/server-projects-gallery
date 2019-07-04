@@ -1,7 +1,8 @@
-const express = require('express');
+const router = require('koa-router')();
 const authMiddleware = require('../middleware/auth');
 const blogMiddleware = require('../middleware/blog');
-const router = express.Router();
+
+router.prefix('/api/blog');
 
 router.get('/list', blogMiddleware.list);
 router.get('/detail', blogMiddleware.detail);

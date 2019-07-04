@@ -1,19 +1,19 @@
 const { model } = require('m2-nodejs');
 const { ErrorModel } = model;
 
-const handler = (req, res) => {
-  const { session } = req;
+const handler = (ctx) => {
+  const { session } = ctx;
   if (!session.username) {
-    res.json(new ErrorModel('用户登录失败'));
+    ctx.body = new ErrorModel('用户登录失败');
     return false;
   }
   return session.username;
 };
 
-const check = (req, res, next) => {
-  const result = handler(req, res);
+const check = async (ctx, next) => {
+  const result = handler(ctx);
   if (result) {
-    next();
+    await next();
   }
 };
 

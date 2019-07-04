@@ -1,7 +1,7 @@
 const xss = require('xss');
 const { exec, escape } = require('../db/mysql');
 
-const getList = (author = '', keyword = '') => {
+const getList = async (author = '', keyword = '') => {
   let sql = 'select * from blogs where 1=1';
   if (author) {
     sql += ` and author=${escape(author)}`;
@@ -10,31 +10,35 @@ const getList = (author = '', keyword = '') => {
     sql += ` and title like '%${keyword}%'`;
   }
   sql += ' order by create_time desc';
-  return exec(sql);
+  return await exec(sql);
 };
 
-const getDetail = (id) => {
+const getDetail = async (id) => {
   const sql = `select * from blogs where id=${escape(id)}`;
-  return exec(sql).then(res => res[0]);
+  const res = await exec(sql);
+  return res[0];
 };
 
-const createItem = (blog = {}) => {
+const createItem = async (blog = {}) => {
   const { title, content, author } = blog;
   const sql = `insert into blogs(title,content,create_time,author) 
                values(${escape(xss(title))},${escape(xss(content))},${Date.now()},${escape(author)})`;
-  return exec(sql).then(res => ({ id: res.insertId }));
+  const res = await exec(sql);
+  return { id: res.insertId };
 };
 
-const updateItem = (id, blog = {}) => {
+const updateItem = async (id, blog = {}) => {
   const { title, content, author } = blog;
   const sql = `update blogs set title=${escape(xss(title))},content=${escape(xss(content))}
                where id=${escape(id)} and author=${escape(author)}`;
-  return exec(sql).then(res => res.affectedRows > 0);
+  const res = await exec(sql);
+  return res.affectedRows > 0;
 };
 
-const deleteItem = (id, author) => {
+const deleteItem = async (id, author) => {
   const sql = `delete from blogs where id=${escape(id)} and author=${escape(author)}`;
-  return exec(sql).then(res => res.affectedRows > 0);
+  const res = await exec(sql);
+  return res.affectedRows > 0;
 };
 
 module.exports = {
