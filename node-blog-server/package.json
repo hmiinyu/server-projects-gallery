@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "m2-nodejs": "^1.0.0",
+    "m2-nodejs": "^1.0.1",
     "xss": "^1.0.6"
   },
   "devDependencies": {
